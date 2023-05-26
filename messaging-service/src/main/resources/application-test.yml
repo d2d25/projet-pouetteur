@@ -1,0 +1,23 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: test
+      uri: mongodb://localhost:27017/test
+      embedded:
+        enabled: true
+        storage:
+          database-dir: ${java.io.tmpdir}/fongo
+          replication:
+            enabled: false
+
+logging:
+  level:
+    org.springframework.data.mongodb.core: DEBUG
+    org.springframework.data.mongodb.repository: DEBUG
+
+ACCESS_TOKEN_PRIVATE_KEY_PATH: "access-refresh-token-keys/access-token-private.key"
+ACCESS_TOKEN_PUBLIC_KEY_PATH: "access-refresh-token-keys/access-token-public.key"
+REFRESH_TOKEN_PRIVATE_KEY_PATH: "access-refresh-token-keys/refresh-token-private.key"
+REFRESH_TOKEN_PUBLIC_KEY_PATH: "access-refresh-token-keys/refresh-token-public.key"

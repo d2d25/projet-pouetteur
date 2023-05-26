@@ -1,0 +1,16 @@
+POST http://localhost:3336/messaging/conversation HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "pouet",
+  "members": [
+    {
+      "id": "156156315243",
+      "username": "leo"
+    },
+    {
+      "id": "1256233485645",
+      "username": "timothe"
+    }
+  ]
+}

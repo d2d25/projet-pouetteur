@@ -1,0 +1,149 @@
+### Authenfications pour créer un utilisateur
+POST http://localhost:3333/auth/register
+Content-Type: application/json
+
+{
+  "username" : "Hugo",
+  "email" : "Hugo@gmail.com",
+  "password" : "adminadmin"
+}
+
+> {%
+    client.global.set("hugo_token", response.body.json().accessToken);
+    client.global.set("hugo_id", response.body.json().id);
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Authenfications pour se connecter et récupérer un token
+POST http://localhost:3333/auth/login
+Content-Type: application/json
+
+{
+    "login" : "Hugo",
+    "password" : "adminadmin"
+}
+> {%
+    client.global.set("hugo_token", response.body.accessToken);
+    client.global.set("hugo_id", response.body.userId);
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Créer une notification de type abonnement
+POST http://localhost:3337/notifications
+Authorization: Bearer {{hugo_token}}
+Content-Type: application/json
+
+
+{
+  "title": "Un utilisateur s'est abonné à vous",
+  "body": "Le membre Julien s'est abonné à vous",
+  "type": "abonnement",
+  "notifieId": "{{hugo_id}}",
+  "notifiantMember": {
+    "id": "789"
+  }
+}
+> {%
+    client.global.set("created_notification_id_abonnement", response.body.id);
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+%}
+
+### Créer une notification de type réaction
+POST http://localhost:3337/notifications
+Authorization: Bearer {{hugo_token}}
+Content-Type: application/json
+
+{
+  "title": "Nouvelle réaction",
+  "body": "Pouet A a été aimé",
+  "type": "reaction",
+  "notifieId": "{{hugo_id}}",
+  "notifiantPouet": {
+    "idPouet": "12345",
+    "author": {
+      "id": "{{hugo_id}}"
+    },
+    "title": "Pouet A",
+    "body": "Ceci est un pouet"
+  }
+}
+> {%
+    client.global.set("created_notification_id_reaction", response.body.id);
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+%}
+
+### Récupérer une notification par ID
+GET http://localhost:3337/notifications/{{created_notification_id_abonnement}}
+Authorization: Bearer {{hugo_token}}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Mettre à jour une notification
+PUT http://localhost:3337/notifications/{{created_notification_id_reaction}}
+Authorization: Bearer {{hugo_token}}
+Content-Type: application/json
+
+{
+  "title": "Nouvelle réaction",
+  "body": "Pouet A n'ai plus aimé",
+  "type": "reaction",
+  "notifie": {
+    "id": "{{hugo_id}}"
+  },
+  "notifiant" : {
+    "id": "12345",
+    "author": {
+      "id": "{{hugo_id}}"
+    },
+    "title": "Pouet A",
+    "body": "Ceci est un pouet"
+  }
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Récupérer les notifications par notifieId
+GET http://localhost:3337/notifications/notifie/{{hugo_id}}
+Authorization: Bearer {{hugo_token}}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Supprimer une notification par ID
+DELETE http://localhost:3337/notifications/{{created_notification_id_abonnement}}
+Authorization: Bearer {{hugo_token}}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 204, "Response status is not 204");
+    });
+%}
+
+### Récupérer les notifications par ID pour check qu'elle est bien supprimée
+GET http://localhost:3337/notifications/{{created_notification_id_abonnement}}
+Authorization: Bearer {{hugo_token}}
+
+> {%
+    client.test("Request should fail", function() {
+        client.assert(response.status === 404, "Response status is not 404");
+    });
+%}

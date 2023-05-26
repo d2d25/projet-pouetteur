@@ -1,0 +1,52 @@
+spring:
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+  application:
+    name: auth-service
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: <731291689215-1spvmm8e5gqf3vrrmnb4gulujaadn8mh.apps.googleusercontent.com>
+            client-secret: <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>
+            client-name: Google
+            scope: email,profile
+          github:
+            client-id: <votre-id-client>
+            client-secret: <votre-secret-client>
+            client-name: GitHub
+            scope: email,profile
+  profiles:
+    active: dev
+  data:
+    mysql:
+      database: auth_db
+      host: auth_db
+      port: 3306
+      username: root
+      password: password
+      schema: classpath:db/mysql/schema.sql
+      data: classpath:db/mysql/data.sql
+      continue-on-error: true
+      initialization-mode: always
+
+  jpa:
+    database: mysql
+
+access-token:
+  private: ${ACCESS_TOKEN_PRIVATE_KEY_PATH}
+  public: ${ACCESS_TOKEN_PUBLIC_KEY_PATH}
+refresh-token:
+  private: ${REFRESH_TOKEN_PRIVATE_KEY_PATH}
+  public: ${REFRESH_TOKEN_PUBLIC_KEY_PATH}
+
+server:
+  port: 3333

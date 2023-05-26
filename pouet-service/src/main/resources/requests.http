@@ -1,0 +1,118 @@
+### Test création d'un pouet
+POST http://localhost:3335/api/pouets
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJtKmU3MTRiNzFhLTk1MTEtNDIwNy1iMjgzLWJiMGRkNDI1OTYxNyIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpc3MiOiJwb3VldHRldXIgYXV0aC1zZXJ2aWNlIiwiZXhwIjoxNjgxNTY5MTk0LCJpYXQiOjE2ODE1Njg4OTQsInVzZXJJZCI6Im0qZTcxNGI3MWEtOTUxMS00MjA3LWIyODMtYmIwZGQ0MjU5NjE3IiwiZW1haWwiOiJjYWNhcHJvdXRAZ21haWwuY29tIiwidXNlcm5hbWUiOiJjYWNhcHJvdXQifQ.A-4TNGalW4I537i47zTXINgiSBQ28SjwXbfR2pbQJAo1z8Qm5dLV7Zp7TlCXb3ae8cmUMn-0uloXQkewRSYgQNxMjbDgTaO_pkE4BsL2TyNeW8p7yd_oGmlFs121V1ubDx7bZesKPa8B0G2x4IFA-yNXODYVANN72X2tvw3WF9Ucb3vkZKsiYdcZpkJWp3xLRBchjVs_xrV1LHHXQBcuBQooxsu7B8r-hrXKXxUzhqjgcNaObd45NMUThFMBihZAqdCmH6fXy2kTG58_toENp3zwjPfWJ6cmKoTZbVlMQPGolTkECjLn4JYz2Z2Z1JSnIGzp9RbOek1P1-j2x_e34A
+
+
+{
+  "title" : "feur",
+  "body" : "feur feur feur feur",
+  "tags" : ["test", "lol"],
+  "postedOn" : [{
+    "id" :  "1",
+    "username" : "m/dudees45"
+  }]
+}
+
+
+### Test récupération d'un pouet par un id
+GET http://localhost:3335/api/pouets/1
+
+
+### Test récupérer tous les pouets
+GET http://localhost:3335/api/pouets
+
+
+### Test récupérer les pouets possédant le tag 'test' implémentés au dessus
+GET http://localhost:3335/api/tags/test
+
+
+
+### Test récupérer les pouets créés par le membre "dudees45"
+GET http://localhost:3335/api/members/dudees45
+
+
+###Test ajouter un média au pouet avec id 1
+PATCH http://localhost:3335/api/pouets/1/medias
+Content-Type: application/json
+
+
+{
+  "media" : "testlienxdddddddd"
+}
+
+### Test ajouter un tag au pouet avec id 1
+PATCH http://localhost:3335/api/pouets/1/tags
+Content-Type: application/json
+
+{
+  "tag" : "test tag xdddd"
+}
+
+
+### Test ajouter une réponse au pouet avec id 1
+POST http://localhost:3335/api/pouets/1/answers
+Content-Type: application/json
+
+{
+    "author": {
+      "id" : 2,
+    "username": "m/aigriDuVillage"
+  },
+  "title" : "feur",
+  "body" : "feur feur feur feur pas content",
+  "tags" : ["xd", "^^"],
+  "postedOn" : [{
+    "id" :  "2",
+    "username" : "aigriDuVillage"
+  }]
+}
+
+
+### Test ajouter une réaction au pouet avec id 1
+PATCH http://localhost:3335/api/pouets/1/reactions
+Content-Type: application/json
+
+{
+ "reaction" : "HaHa"
+}
+
+### test compter toutes les reactions du pouet avec id 1
+GET http://localhost:3335/api/pouets/1/reactions/count
+
+### test compter toutes les reactions like du pouet avec id 1
+GET http://localhost:3335/api/pouets/1/reactions/like/count
+
+### test compter toutes les reactions love du pouet avec id 1
+GET http://localhost:3335/api/pouets/1/reactions/love
+
+###  test compter toutes les reactions haha du pouet avec id 1
+GET http://localhost:3335/api/pouets/1/reactions/haha
+
+###  test compter toutes les reactions wow du pouet avec id 1
+GET http://localhost:3335/api/pouets/1/reactions/wow
+
+###  test compter toutes les reactions sad du pouet avec id 1
+GET http://localhost:3335/api/pouets/1/reactions/sad
+
+###  test compter toutes les reactions angry du pouet avec id 1
+GET http://localhost:3335/api/pouets/1/reactions/angry
+
+### test récupérer toutes les reponses du pouet avec id 1
+GET http://localhost:3335/api/pouets/1/answers
+
+### Test partager un pouet
+PATCH http://localhost:3335/api/pouets/1/share
+Content-Type: application/json
+
+{
+  "destination": {
+    "id": 2,
+    "username": "aigriDuVillage"
+  }
+}
+
+### test récupérer le nombre de partages d'un pouet
+GET http://localhost:3335/api/pouets/1/partages
+
+

@@ -1,0 +1,39 @@
+spring:
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+  application:
+    name: notification-service
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      config:
+        enabled: false
+        format: yaml
+      discovery:
+        service-name: ${spring.application.name}
+  data:
+    mongodb:
+      database: notification_db
+      host: notification_db
+      port: 27017
+      username: root
+      password: password
+      authentication-database: admin
+      authentication-mechanism: SCRAM-SHA-1
+      continue-on-error: true
+      initialization-mode: always
+
+server:
+    port: 3337
+
+access-token:
+  public: ${ACCESS_TOKEN_PUBLIC_KEY_PATH}
+refresh-token:
+  public: ${REFRESH_TOKEN_PUBLIC_KEY_PATH}
+
+ACCESS_TOKEN_PUBLIC_KEY_PATH: "access-refresh-token-keys/access-token-public.key"
+REFRESH_TOKEN_PUBLIC_KEY_PATH: "access-refresh-token-keys/refresh-token-public.key"

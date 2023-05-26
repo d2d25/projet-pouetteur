@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.pouetteur</groupId>
+  <artifactId>projet-pouetteur</artifactId>
+  <version>1.0</version>
+  <name>projet-pouetteur</name>
+  <description>projet-pouetteur</description>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <java.version>17</java.version>
+  </properties>
+
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>gateway</module>
+    <module>auth-service</module>
+    <module>notification-service</module>
+    <module>pouet-service</module>
+    <module>messaging-service</module>
+  </modules>
+</project>
